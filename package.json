@@ -1,0 +1,65 @@
+{
+  "name": "fhevm-auction-platform",
+  "version": "1.0.0",
+  "description": "FHEVM机密拍卖平台 - 基于全同态加密的隐私保护拍卖系统",
+  "main": "server.js",
+  "scripts": {
+    "dev": "npm run compile && node server.js",
+    "start": "node server.js",
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "coverage": "hardhat coverage",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "deploy:sepolia": "hardhat run scripts/deploy.js --network sepolia",
+    "verify": "hardhat verify --network sepolia",
+    "check-balance": "hardhat run scripts/check-balance.js --network sepolia",
+    "analyze-existing": "hardhat run scripts/analyze-existing.js --network sepolia",
+    "export-data": "hardhat run scripts/export-data.js --network sepolia",
+    "migrate-data": "hardhat run scripts/migrate-data.js --network sepolia",
+    "build": "npm run compile && npm run generate-config",
+    "generate-config": "node scripts/generate-config.js",
+    "demo:setup": "hardhat run scripts/demo-setup.js --network localhost",
+    "demo:start": "npm run demo:setup && npm start",
+    "demo:clean": "hardhat run scripts/deploy.js --network localhost && npm run demo:setup",
+    "lint": "eslint . --ext .js,.ts",
+    "lint:fix": "eslint . --ext .js,.ts --fix",
+    "format": "prettier --write \"**/*.{js,ts,json,md,sol}\"",
+    "clean": "hardhat clean && rm -rf node_modules package-lock.json",
+    "reinstall": "npm run clean && npm install"
+  },
+  "keywords": [
+    "fhevm",
+    "zama",
+    "fhe",
+    "homomorphic-encryption",
+    "blockchain",
+    "ethereum",
+    "solidity",
+    "auction",
+    "privacy",
+    "marketplace"
+  ],
+  "author": "FHEVM Auction Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "ethers": "^5.7.2",
+    "axios": "^1.4.0",
+    "helmet": "^7.0.0",
+    "compression": "^1.7.4",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@openzeppelin/contracts": "^4.9.0",
+    "hardhat": "^2.17.0",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

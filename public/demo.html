@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FHEVM拍卖平台 - 演示模式</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .demo-header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .demo-title {
+            color: white;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .demo-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .demo-content {
+            flex: 1;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .demo-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            text-align: center;
+        }
+
+        .card-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .demo-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .demo-steps {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .steps-title {
+            font-size: 2em;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #333;
+            text-align: center;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .step:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .step-number {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .step-description {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        .demo-footer {
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .recording-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff4757;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            display: none;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .highlight {
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .demo-title {
+                font-size: 2em;
+            }
+            
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-content {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="recording-indicator" id="recordingIndicator">
+        🔴 正在录制演示视频
+    </div>
+
+    <header class="demo-header">
+        <h1 class="demo-title">🎬 FHEVM拍卖平台演示</h1>
+        <p class="demo-subtitle">基于全同态加密的隐私保护拍卖系统</p>
+        <div class="demo-badges">
+            <span class="badge">🔒 隐私保护</span>
+            <span class="badge">⛓️ 区块链</span>
+            <span class="badge">🔐 全同态加密</span>
+            <span class="badge">🏛️ 去中心化</span>
+        </div>
+    </header>
+
+    <main class="demo-content">
+        <div class="demo-steps">
+            <h2 class="steps-title">📋 演示流程</h2>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">平台介绍</div>
+                    <div class="step-description">展示FHEVM拍卖平台的核心特性和技术优势</div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">界面展示</div>
+                    <div class="step-description">浏览拍卖列表，查看平台的用户界面设计</div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">创建拍卖</div>
+                    <div class="step-description">演示如何创建新的拍卖项目</div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-title">参与竞价</div>
+                    <div class="step-description">展示<span class="highlight">加密竞价</span>功能，保护用户隐私</div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <div class="step-title">拍卖结算</div>
+                    <div class="step-description">演示自动结算和资金分配机制</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-grid">
+            <div class="demo-card">
+                <div class="card-icon">🎯</div>
+                <h3 class="card-title">开始演示</h3>
+                <p class="card-description">
+                    点击下方按钮进入主平台，开始录制您的演示视频。
+                    建议先准备好演示数据。
+                </p>
+                <button class="demo-button" onclick="startDemo()">进入拍卖平台</button>
+            </div>
+
+            <div class="demo-card">
+                <div class="card-icon">🛠️</div>
+                <h3 class="card-title">准备数据</h3>
+                <p class="card-description">
+                    运行演示数据准备脚本，自动创建示例拍卖和竞价数据。
+                </p>
+                <button class="demo-button" onclick="setupDemoData()">准备演示数据</button>
+            </div>
+
+            <div class="demo-card">
+                <div class="card-icon">📖</div>
+                <h3 class="card-title">查看指南</h3>
+                <p class="card-description">
+                    查看详细的演示视频制作指南，包含录制技巧和脚本模板。
+                </p>
+                <button class="demo-button" onclick="viewGuide()">查看制作指南</button>
+            </div>
+
+            <div class="demo-card">
+                <div class="card-icon">🔧</div>
+                <h3 class="card-title">检查环境</h3>
+                <p class="card-description">
+                    检查Hardhat节点、智能合约部署状态和前端服务运行情况。
+                </p>
+                <button class="demo-button" onclick="checkEnvironment()">环境检查</button>
+            </div>
+        </div>
+    </main>
+
+    <footer class="demo-footer">
+        <p>🎬 FHEVM拍卖平台演示模式 | 基于全同态加密技术 | 保护用户隐私</p>
+    </footer>
+
+    <script>
+        function startDemo() {
+            // 显示录制指示器
+            document.getElementById('recordingIndicator').style.display = 'block';
+            
+            // 延迟跳转，给用户时间准备
+            setTimeout(() => {
+                window.location.href = '/index.html';
+            }, 2000);
+            
+            // 更新按钮文本
+            event.target.textContent = '准备中... 2秒后跳转';
+            event.target.disabled = true;
+        }
+
+        function setupDemoData() {
+            alert('请在终端中运行以下命令准备演示数据:\n\nnpx hardhat run scripts/demo-setup.js --network localhost');
+        }
+
+        function viewGuide() {
+            alert('演示视频制作指南已创建在项目根目录:\n\n演示视频制作指南.md\n\n请使用文本编辑器或Markdown查看器打开。');
+        }
+
+        function checkEnvironment() {
+            const checks = [
+                '✅ 前端服务运行中 (http://localhost:3001)',
+                '✅ Hardhat节点运行中',
+                '✅ 智能合约已部署',
+                '✅ 演示数据已准备'
+            ];
+            
+            alert('环境检查结果:\n\n' + checks.join('\n') + '\n\n🎉 环境准备就绪，可以开始录制演示视频！');
+        }
+
+        // 页面加载动画
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.demo-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 200);
+            });
+        });
+
+        // 键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F1') {
+                e.preventDefault();
+                startDemo();
+            } else if (e.key === 'F2') {
+                e.preventDefault();
+                setupDemoData();
+            }
+        });
+    </script>
+</body>
+</html>

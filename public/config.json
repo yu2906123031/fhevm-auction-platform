@@ -1,0 +1,18 @@
+{
+    "networkName": "localhost",
+    "rpcUrl": "http://127.0.0.1:8545",
+    "chainId": 31337,
+    "contractAddress": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+  "features": {
+    "auction": true,
+    "bidding": true,
+    "privacy": true,
+    "marketplace": true
+  },
+  "auctionConfig": {
+    "defaultDuration": 86400,
+    "minBidIncrement": "1000000000000000",
+    "maxDuration": 2592000,
+    "feePercentage": 250
+  }
+}

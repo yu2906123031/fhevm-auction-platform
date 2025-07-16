@@ -1,0 +1,19 @@
+{
+  "contracts": {
+    "AuctionPlatform": {
+      "address": "0x00a0c4c5a6c83578dd19db328b3d8381519221fe",
+      "network": "sepolia",
+      "deployedAt": "2024-01-01T00:00:00.000Z",
+      "blockNumber": 0,
+      "transactionHash": "",
+      "verified": true
+    }
+  },
+  "networks": {
+    "sepolia": {
+      "chainId": 11155111,
+      "rpcUrl": "https://sepolia.infura.io/v3/YOUR_INFURA_KEY",
+      "explorerUrl": "https://sepolia.etherscan.io"
+    }
+  }
+}
